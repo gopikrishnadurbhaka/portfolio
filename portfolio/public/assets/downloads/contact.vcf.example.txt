@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Dr. Gopi Krishna Durbhaka
+N:Durbhaka;Gopi Krishna;;Dr.;
+EMAIL;TYPE=INTERNET:dr.gopikrishnadurbhaka@gmail.com
+ADR;TYPE=WORK:;;Hyderabad;;;India
+URL:https://www.linkedin.com/in/gopikrishnadurbhaka/
+END:VCARD
+
+Copy the vCard block into contact.vcf. Add TEL;TYPE=CELL: followed by your real number only if you want to share it.
