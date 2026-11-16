@@ -1,0 +1,48 @@
+
+name: Check Portfolio Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        working-directory: portfolio
+        run: bun install --frozen-lockfile
+
+      - name: Build portfolio
+        working-directory: portfolio
+        run: bun run build
+
+      - name: Inspect build output
+        run: |
+          echo "=== Generated directories ==="
+          find portfolio -maxdepth 4 -type d \
+            \( -name dist -o -name .output -o -name build \)
+
+          echo "=== Generated HTML files ==="
+          find portfolio -maxdepth 5 -name index.html
+
+          echo "=== Generated files ==="
+          find portfolio -maxdepth 3 -type f \
+            \( -name index.html -o -name manifest.json \)
