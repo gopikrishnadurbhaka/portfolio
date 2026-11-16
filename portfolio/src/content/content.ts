@@ -30,13 +30,13 @@ export const SITE_CONTENT: SiteContent = {
     formEndpoint: "",
     downloads: {
       resume: {
-        enabled: true,
+        enabled: false,
         url: "/assets/downloads/Resume.pdf",
         label: "Download Resume",
         contactLabel: "Download Resume",
       },
       contact: {
-        enabled: true,
+        enabled: false,
         url: "/assets/downloads/contact.vcf",
         label: "Save Contact",
         contactLabel: "Save Contact",
