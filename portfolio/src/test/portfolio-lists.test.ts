@@ -11,8 +11,8 @@ describe("portfolio display rules", () => {
     expect(firstItems([1, 2, 3, 4, 5, 6, 7], false, 6)).toEqual([1, 2, 3, 4, 5, 6]);
   });
   it("keeps the exact requested download filenames", () => {
-    expect(SITE_CONTENT.settings.downloads.resume.url).toBe("/assets/downloads/Resume.pdf");
-    expect(SITE_CONTENT.settings.downloads.contact.url).toBe("/assets/downloads/contact.vcf");
+    expect(SITE_CONTENT.settings.downloads.resume.url).toBe("/portfolio/assets/downloads/Resume.pdf");
+    expect(SITE_CONTENT.settings.downloads.contact.url).toBe("/portfolio/assets/downloads/contact.vcf");
   });
   it("includes the five supplied past engagements in descending date order", () => {
     const entries = descendingEngagements([...SITE_CONTENT.speaking.past].reverse());
