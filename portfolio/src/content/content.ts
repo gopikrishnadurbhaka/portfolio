@@ -89,11 +89,11 @@ export const SITE_CONTENT: SiteContent = {
     ],
     primaryButton: { label: "Explore My Work", href: "#research" },
     secondaryButton: { label: "Invite Me to Speak", href: "#contact" },
-    photo: "/profile-cutout.webp", // your portrait, shown on top of the background — replace this file or path to change it
+    photo: "/portfolio/profile-cutout.webp", // your portrait, shown on top of the background — replace this file or path to change it
     photoWidth: 1290,
     photoHeight: 1913,
     photoAlt: "Portrait of Dr. Gopi Krishna Durbhaka",
-    backgroundImage: "/images/hero-engineering-intelligence.jpg", // top background — replace this file or path to change it
+    backgroundImage: "/portfolio/images/hero-engineering-intelligence.jpg", // top background — replace this file or path to change it
     verticalText: "PHM · RELIABILITY · AIoT · PREDICTIVE MAINTENANCE",
   },
 
@@ -183,37 +183,37 @@ export const SITE_CONTENT: SiteContent = {
       {
         title: "Industrial AI",
         text: "Machine learning and deep learning for industrial automation.",
-        image: "/images/expertise/industrial-ai.jpg",
+        image: "/portfolio/images/expertise/industrial-ai.jpg",
       },
       {
         title: "AIoT Systems",
         text: "Connected systems for real-time insights and control.",
-        image: "/images/expertise/aiot.jpg",
+        image: "/portfolio/images/expertise/aiot.jpg",
       },
       {
         title: "Predictive Maintenance",
         text: "AI-driven solutions to minimize downtime and extend asset life.",
-        image: "/images/expertise/predictive.jpg",
+        image: "/portfolio/images/expertise/predictive.jpg",
       },
       {
         title: "Edge AI",
         text: "Real-time analytics to enhance decisions at the edge.",
-        image: "/images/expertise/edge-ai.jpg",
+        image: "/portfolio/images/expertise/edge-ai.jpg",
       },
       {
         title: "Signal & Vibration Analytics",
         text: "Condition monitoring from vibration and electrical signals.",
-        image: "/images/expertise/vibration.jpg",
+        image: "/portfolio/images/expertise/vibration.jpg",
       },
       {
         title: "Smart Sensors",
         text: "Advanced sensing solutions for industrial equipment.",
-        image: "/images/expertise/sensors.jpg",
+        image: "/portfolio/images/expertise/sensors.jpg",
       },
       {
         title: "Cloud & Data Platforms",
         text: "Scalable platforms for data ingestion and visualization.",
-        image: "/images/expertise/cloud.jpg",
+        image: "/portfolio/images/expertise/cloud.jpg",
       },
     ],
   },
