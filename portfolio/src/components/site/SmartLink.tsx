@@ -1,33 +1,37 @@
-import { Link } from "@tanstack/react-router";
+
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
-type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & { href: string; children: ReactNode };
+type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+  href: string;
+  children: ReactNode;
+};
 
 /**
- * Renders a link from content.ts:
- * "#research" → scrolls to that section of the home page; "https://…" → opens in a new tab; anything else → normal link.
+ * Handles internal section links and external URLs.
+ * Internal links always resolve against the Vite deployment base.
  */
 export function SmartLink({ href, children, ...rest }: Props) {
   if (href.startsWith("#")) {
     const id = href.slice(1);
-    const { className, onClick } = rest;
+    const homeUrl = `${import.meta.env.BASE_URL}#${id}`;
+
     return (
-      <Link
-        to="/"
-        hash={id}
-        className={className}
-        onClick={(e) => {
-          onClick?.(e);
-          if (window.location.pathname === "/") document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        }}
-      >
+      <a href={homeUrl} {...rest}>
         {children}
-      </Link>
+      </a>
     );
   }
+
   const external = /^https?:\/\//.test(href);
+
   return (
-    <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} {...rest}>
+    <a
+      href={href}
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+      {...rest}
+    >
       {children}
     </a>
   );
