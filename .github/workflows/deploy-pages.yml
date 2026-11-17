@@ -1,0 +1,65 @@
+
+name: Deploy Portfolio to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        working-directory: portfolio
+        run: bun install --frozen-lockfile
+
+      - name: Build portfolio
+        working-directory: portfolio
+        run: bun run build
+
+      - name: Verify website output
+        run: |
+          test -f portfolio/.output/public/index.html
+          test -f portfolio/.output/public/about/index.html
+          test -f portfolio/.output/public/assets/downloads/Resume.pdf
+          test -f portfolio/.output/public/assets/downloads/contact.vcf
+          echo "Portfolio static output verified."
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio/.output/public
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
