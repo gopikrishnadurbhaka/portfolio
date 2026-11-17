@@ -14,7 +14,7 @@ export function DownloadLinks({ contact = false, dark = false }: { contact?: boo
 }
 
 export function SpeakButton({ variant = "default", size = "default", label = site.speaking.buttonLabel }: Pick<ButtonProps, "variant" | "size"> & { label?: string }) {
-  if (!site.settings.scheduleEnabled) return <Button asChild variant={variant} size={size}><a href="/#contact">{label}</a></Button>;
+  if (!site.settings.scheduleEnabled) return <Button asChild variant={variant} size={size}><a href={`${import.meta.env.BASE_URL}#contact`}>{label}</a></Button>;
   return <Dialog><DialogTrigger asChild><Button variant={variant} size={size}>{label}</Button></DialogTrigger>
     <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto">
       <DialogHeader><DialogTitle className="text-2xl text-primary">{site.ui.speakingTopic}</DialogTitle><DialogDescription>{site.contact.text}</DialogDescription></DialogHeader>
