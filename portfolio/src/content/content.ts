@@ -31,13 +31,13 @@ export const SITE_CONTENT: SiteContent = {
     downloads: {
       resume: {
         enabled: false,
-        url: "/assets/downloads/Resume.pdf",
+        url: "/portfolio/assets/downloads/Resume.pdf",
         label: "Download Resume",
         contactLabel: "Download Resume",
       },
       contact: {
         enabled: false,
-        url: "/assets/downloads/contact.vcf",
+        url: "/portfolio/assets/downloads/contact.vcf",
         label: "Save Contact",
         contactLabel: "Save Contact",
       },
