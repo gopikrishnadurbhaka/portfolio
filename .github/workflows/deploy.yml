@@ -1,70 +1,74 @@
+
 name: Check Portfolio Build
 
-on: push: branches: - main workflow_dispatch:
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-permissions: contents: read
+permissions:
+  contents: read
 
-jobs: build: runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: 22
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-  - name: Setup Bun
-    uses: oven-sh/setup-bun@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
-  - name: Verify source static assets
-    working-directory: portfolio
-    run: |
-      echo "=== Checking source assets ==="
+      - name: Verify source static assets
+        working-directory: portfolio
+        run: |
+          echo "=== Checking source assets ==="
+          test -f public/assets/downloads/Resume.pdf
+          test -f public/assets/downloads/contact.vcf
+          echo "Both source files exist."
 
-      find public/assets/downloads -maxdepth 1 -type f -print
+      - name: Install dependencies
+        working-directory: portfolio
+        run: bun install --frozen-lockfile
 
-      test -f public/assets/downloads/Resume.pdf
-      test -f public/assets/downloads/contact.vcf
+      - name: Clean previous build
+        working-directory: portfolio
+        run: |
+          rm -rf .output .vinxi .tanstack
+          rm -rf node_modules/.vite node_modules/.nitro
 
-      echo "Both source files exist."
+      - name: Run tests
+        working-directory: portfolio
+        run: bun run test
 
-  - name: Install dependencies
-    working-directory: portfolio
-    run: bun install --frozen-lockfile
+      - name: Build portfolio
+        working-directory: portfolio
+        run: bun run build
 
-  - name: Clean previous build
-    working-directory: portfolio
-    run: |
-      rm -rf .output .vinxi .tanstack
-      rm -rf node_modules/.vite node_modules/.nitro
+      - name: Verify generated static assets
+        working-directory: portfolio
+        run: |
+          echo "=== Checking generated assets ==="
+          test -f .output/public/assets/downloads/Resume.pdf
+          test -f .output/public/assets/downloads/contact.vcf
+          echo "Both assets exist in production output."
 
-  - name: Build portfolio
-    working-directory: portfolio
-    run: bun run build
+      - name: Inspect build output
+        run: |
+          echo "=== Generated directories ==="
+          find portfolio -maxdepth 4 -type d \
+            \( -name dist -o -name .output -o -name build \)
 
-  - name: Verify generated static assets
-    working-directory: portfolio
-    run: |
-      echo "=== Checking generated assets ==="
+          echo "=== Generated HTML files ==="
+          find portfolio -maxdepth 5 -name index.html
 
-      ls -lah .output/public/assets/downloads/
-
-      test -f .output/public/assets/downloads/Resume.pdf
-      test -f .output/public/assets/downloads/contact.vcf
-
-      echo "Both assets were copied into the production output."
-
-  - name: Inspect build output
-    run: |
-      echo "=== Generated directories ==="
-      find portfolio -maxdepth 4 -type d \
-        \( -name dist -o -name .output -o -name build \)
-
-      echo "=== Generated HTML files ==="
-      find portfolio -maxdepth 5 -name index.html
-
-      echo "=== Generated files ==="
-      find portfolio -maxdepth 3 -type f \
-        \( -name index.html -o -name manifest.json \)
+          echo "=== Generated files ==="
+          find portfolio -maxdepth 3 -type f \
+            \( -name index.html -o -name manifest.json \)
